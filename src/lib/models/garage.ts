@@ -1,29 +1,31 @@
-export interface IGarage {
-    floor_one: IGarageFloor,
-    floor_two: IGarageFloor
-}
-
 export interface IGarageFloor {
-    capacity: number,
-    available: number,
-    spots: IParkingSpot[]
-}
-
-export interface IParkingSpot {
-    type: ParkingSpotType,
-    occupied: boolean,
-    occupiedDuration: Date | null,
-    currentRate: number
-}
-
-export enum ParkingSpotType {
-    COMPACT = 1,
-    LARGE = 2,
-    HANDICAP = 3,
-    MOTORCYCLE = 4
+	name: string
+	capacity: number
+	available: number
+	spots: IParkingSpot[]
 }
 
 /**
- * Structuring the garage as a Map, where the key is the floor.
+ * type: The parking spot type
+ * occupied: Determines if a spot is occupied or not
+ * duration: Total duration calculated from occupationStartedAt and occupationEndedAt
+ * occupationStartedAt: Is a date that is set when the spot gets occupied
+ * occupationEndedAt: Is a date that is set when the occupation ends.
+ * currentRate: Is calculated from the duration
  */
-export type GarageMap = Map<number, IGarageFloor>
+export interface IParkingSpot {
+	type: ParkingSpotType
+	occupied: boolean
+	duration: number
+	occupationStartedAt: Date | null
+	occupationEndedAt: Date | null
+	currentRate: number
+}
+
+/** Each parking spot type is defined as enums */
+export enum ParkingSpotType {
+	COMPACT = 1,
+	LARGE = 2,
+	HANDICAP = 3,
+	MOTORCYCLE = 4,
+}
