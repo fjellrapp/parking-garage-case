@@ -1,4 +1,4 @@
-import create, { StoreMutators } from 'zustand';
+import create from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware'
 
 import {  GarageMap, ParkingSpotType } from '../models/garage';
@@ -8,8 +8,7 @@ export interface GarageStore {
     setOccupied: (floor: number, spotIndex: number) => void
 }
 
-const initialGarage: GarageMap = new Map()
-initialGarage.set(1, {
+const initialGarage: GarageMap = new Map().set(1, {
     capacity: 10,
     available: 8,
     spots: [
@@ -74,8 +73,8 @@ initialGarage.set(1, {
             currentRate: 0
         },
     ]
-},)
-initialGarage.set(2, {capacity: 10,
+}).set(2, {
+    capacity: 10,
     available: 5,
     spots: [
         {
@@ -140,11 +139,13 @@ initialGarage.set(2, {capacity: 10,
         },
     ]
 })
+
 export const useGarageStore
-= create<GarageStore, [["zustand/persist", GarageStore]]>(persist((set, get) => ({
+= create<GarageStore, [["zustand/persist", unknown]]>(persist((set,get) => ({
     garage: initialGarage,
     setOccupied: (floor: number, spotIndex: number) => set((state: GarageStore) => {
-        const garage = state.garage.get(floor);
+        console.log(state, initialGarage)
+        const garage = get().garage.get(floor);
         const spot = garage?.spots[spotIndex - 1];
         if (typeof spot !== 'undefined' && !spot.occupied) {
             spot.occupied = true;
@@ -152,7 +153,10 @@ export const useGarageStore
         }
         return state;
     })
-}), {
+}),{
     name: 'garage-storage',
-    storage: createJSONStorage(() => localStorage)
+    storage: createJSONStorage(() => sessionStorage),
+    onRehydrateStorage: (state) => {
+        console.log("rehydrate", state)
+    }
 }));
