@@ -9,6 +9,7 @@ const ParkingSpot: React.FC<IProps> = ({ spot }) => {
 	// Extract the name of the parking spot type
 	const title = ParkingSpotTypeMapEnum[spot.type]
 	const dispatch = useAppDispatch()
+
 	return (
 		<div className="my-1 mx-7">
 			<button

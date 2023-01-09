@@ -14,8 +14,6 @@ function App() {
 
 	const dispatch = useAppDispatch()
 
-	console.log(selectedParkingSpot)
-
 	const availabilityAllFloors = garage.reduce(
 		(prev, curr) => curr.available + prev,
 		0
@@ -57,7 +55,7 @@ function App() {
 			</div>
 			<Drawer
 				isOpen={Boolean(selectedParkingSpot)}
-				parkingSpot={selectedParkingSpot}
+				spot={selectedParkingSpot}
 				onCancel={() => dispatch(removeCurrentSelection())}
 				onSubmit={() => console.log('submit')}
 			/>

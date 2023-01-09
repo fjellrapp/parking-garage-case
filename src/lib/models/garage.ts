@@ -10,7 +10,7 @@ export interface IGarageFloor {
  * @property occupied: Determines if a spot is occupied or not
  * @property duration: Total duration calculated from occupationStartedAt and occupationEndedAt
  * @property occupiedAtDateTime: Is a date that is set when the spot gets occupied
- * @property currentRate: Is calculated from the duration
+ * @property fee: Is calculated from the duration
  * @property floor
  */
 export interface IParkingSpot {
@@ -18,7 +18,7 @@ export interface IParkingSpot {
 	occupied: boolean
 	duration: number
 	occupiedAtDateTime: number | null
-	currentRate: number
+	fee: number
 	floor: number
 }
 

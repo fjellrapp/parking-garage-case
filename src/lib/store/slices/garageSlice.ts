@@ -25,6 +25,24 @@ const removeCurrentSelectionReducer = (state: GarageStore) => {
 	state.currentSelection = null
 }
 
+const updateDurationReducer = (
+	state: GarageStore,
+	action: PayloadAction<number>
+) => {
+	if (state.currentSelection) {
+		state.currentSelection.duration = action.payload
+	}
+}
+
+const updateFeeReducer = (
+	state: GarageStore,
+	action: PayloadAction<number>
+) => {
+	if (state.currentSelection) {
+		state.currentSelection.fee = action.payload
+	}
+}
+
 // Slice
 export const garageSlice = createSlice({
 	name: 'garage',
@@ -32,8 +50,14 @@ export const garageSlice = createSlice({
 	reducers: {
 		addCurrentSelection: addCurrentSelectionReducer,
 		removeCurrentSelection: removeCurrentSelectionReducer,
+		updateDuration: updateDurationReducer,
+		updateFee: updateFeeReducer,
 	},
 })
-export const { addCurrentSelection, removeCurrentSelection } =
-	garageSlice.actions
+export const {
+	addCurrentSelection,
+	removeCurrentSelection,
+	updateDuration,
+	updateFee,
+} = garageSlice.actions
 export default garageSlice.reducer
