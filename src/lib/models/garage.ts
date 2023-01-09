@@ -29,3 +29,10 @@ export enum ParkingSpotType {
 	HANDICAP = 3,
 	MOTORCYCLE = 4,
 }
+
+export enum ParkingSpotTypeMapEnum {
+	'Compact' = 1,
+	'Large' = 2,
+	'HC' = 3,
+	'MC' = 4,
+}

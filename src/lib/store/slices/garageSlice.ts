@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IGarageFloor } from '../../models/garage'
+import { IGarageFloor, IParkingSpot } from '../../models/garage'
 import { initial } from '../init'
 
 interface GarageStore {
 	garage: IGarageFloor[]
+	currentSelection: IParkingSpot | null
 }
 
 const initialState: GarageStore = {
 	garage: initial,
+	currentSelection: null,
 }
 
 export const garageSlice = createSlice({
