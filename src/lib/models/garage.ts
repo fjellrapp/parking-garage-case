@@ -6,20 +6,20 @@ export interface IGarageFloor {
 }
 
 /**
- * type: The parking spot type
- * occupied: Determines if a spot is occupied or not
- * duration: Total duration calculated from occupationStartedAt and occupationEndedAt
- * occupationStartedAt: Is a date that is set when the spot gets occupied
- * occupationEndedAt: Is a date that is set when the occupation ends.
- * currentRate: Is calculated from the duration
+ * @property type: The parking spot type
+ * @property occupied: Determines if a spot is occupied or not
+ * @property duration: Total duration calculated from occupationStartedAt and occupationEndedAt
+ * @property occupiedAtDateTime: Is a date that is set when the spot gets occupied
+ * @property currentRate: Is calculated from the duration
+ * @property floor
  */
 export interface IParkingSpot {
 	type: ParkingSpotType
 	occupied: boolean
 	duration: number
-	occupationStartedAt: Date | null
-	occupationEndedAt: Date | null
+	occupiedAtDateTime: number | null
 	currentRate: number
+	floor: number
 }
 
 /** Each parking spot type is defined as enums */
