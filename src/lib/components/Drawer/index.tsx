@@ -20,17 +20,15 @@ interface IProps {
  */
 const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 	const dispatch = useAppDispatch()
-	/**
-	 * The current selection in the store
-	 */
+
+	// The current selection in the store
+
 	const currentState = useAppSelector(
 		(state) => state.garageSlice.currentSelection
 	)
 
-	/**
-	 * the useEffect hook is used to update the duration and fee when the drawer is opened.
-	 * The duration is updated when the drawer is opened, and the fee is updated when the duration is updated.
-	 */
+	// the useEffect hook is used to update the duration and fee when the drawer is opened.
+	// The duration is updated when the drawer is opened, and the fee is updated when the duration is updated.
 	useEffect(() => {
 		if (!currentState?.duration) {
 			setUpdatedDurationAndCalculateRates()
@@ -43,9 +41,7 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 		}
 	}, [currentState])
 
-	/**
-	 * Updates the duration in the store, and calculates the fee.
-	 */
+	// Updates the duration in the store, and calculates the fee.
 	const setUpdatedDurationAndCalculateRates = () => {
 		if (spot?.occupied && spot.occupiedAtDateTime) {
 			// The time delta in milliseconds
@@ -56,23 +52,22 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 	}
 
 	/**
-	 *
 	 * @param hours The number of hours to calculate the fee for
 	 * @returns The fee for the given number of hours
 	 */
 	const calculateFee = (hours: number) => {
 		let fee = 0
-		/** First checks if the hours are greater than zero */
+		// First checks if the hours are greater than zero
 		if (hours > 0) {
-			/**  Adds 50 to the first hour*/
+			//  Adds 50 to the first hour
 			fee += 50
 			if (hours > 1) {
-				/** If hours are greater than 1 (hours two and three). Add 30 to the fee. Multiply by either 2 or hours - 1.
-				 * Whichever is smaller.
-				 */
+				// If hours are greater than 1 (hours two and three). Add 30 to the fee. Multiply by either 2 or hours - 1.
+				// Whichever is smaller.
+
 				fee += 30 * Math.min(2, hours - 1)
 			}
-			/** Adds the fee for the remaining hours */
+			// Adds the fee for the remaining hours
 			if (hours > 3) {
 				fee += 10 * (hours - 3)
 			}
@@ -91,22 +86,22 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 	}
 	return (
 		<DrawerContainers isOpen={isOpen}>
-			{/**
-			 * I would could have used a modal here, but chose to make a drawer in order to view some of the content behind the drawer.
-			 * I Could also have made some of these divs into components, but chose not to because of the small time budget.
-			 */}
+			{
+				// I would could have used a modal here, but chose to make a drawer in order to view some of the content behind the drawer.
+				// I Could also have made some of these divs into components, but chose not to because of the small time budget.
+			}
 			<div className=" m-5 flex  content-center items-center justify-between">
 				<div className="mr-4 flex gap-4 self-center">
 					<h3 className="self-center text-2xl font-semibold">
-						{/**
-						 * The spot type is mapped to a string, and the floor is displayed.
-						 */}
+						{
+							// The spot type is mapped to a string, and the floor is displayed.
+						}
 						{spot?.type ? ParkingSpotTypeMapEnum[spot.type] : 'New'}{' '}
 						spot in floor {spot?.floor}
 					</h3>
-					{/**
-					 * The spot is displayed as occupied or available.
-					 */}
+					{
+						// The spot is displayed as occupied or available.
+					}
 					<span
 						className={` self-center rounded-lg p-2 font-semibold text-white  ${
 							spot?.occupied ? 'bg-red-600' : 'bg-blue-600'
@@ -115,9 +110,9 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 						{spot?.occupied ? 'Occupied' : 'Available'}
 					</span>
 				</div>
-				{/**
-				 * The close button.
-				 */}
+				{
+					// The close button.
+				}
 				<button
 					title="Close"
 					type="button"
@@ -128,9 +123,9 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 				</button>
 			</div>
 
-			{/**
-			 * The main information about the spt is displayed here in EditableContent.
-			 */}
+			{
+				// The main information about the spt is displayed here in EditableContent.
+			}
 			{spot && <EditableContent spot={spot} />}
 		</DrawerContainers>
 	)

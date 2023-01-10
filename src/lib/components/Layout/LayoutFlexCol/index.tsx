@@ -1,4 +1,9 @@
 import React, { ReactNode } from 'react'
+/**
+ * @param classNames - string
+ * @param children   - ReactNode
+ * @returns {JSX.Element}
+ */
 interface IProps {
 	children: ReactNode
 	classNames?: string

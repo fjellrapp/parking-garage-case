@@ -34,7 +34,6 @@ export interface IParkingSpot {
 
 /**
  * This is an enum that is used to determine the type of parking spot
- *
  */
 export enum ParkingSpotTypeEnum {
 	COMPACT = 1,

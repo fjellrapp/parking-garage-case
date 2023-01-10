@@ -37,24 +37,19 @@ const ContentGroup: React.FC<IProps> = ({
 	onCancel,
 	children,
 }) => {
-	/**
-	 * Determines if the content is editable or not
-	 */
+	// Determines if the content is editable or not
 	const [edit, setEdit] = React.useState(false)
-	/**
-	 * Determines if the content is editable or not
-	 */
+
+	// Determines if the content is editable or not
 	const hasEditableContent = editableContent !== undefined
-	/**
-	 * Handles the save button click
-	 */
+
+	// Handles the save button click
 	const handleSave = () => {
 		onSave && onSave()
 		setEdit(false)
 	}
-	/**
-	 * Handles the cancel button click
-	 */
+
+	// Handles the cancel button click
 	const handleCancel = () => {
 		onCancel && onCancel()
 		setEdit(false)
@@ -115,9 +110,9 @@ const ContentGroup: React.FC<IProps> = ({
 						Edit
 					</button>
 				)}
-				{/**
-				 * If the content is editable, render the inputs
-				 */}
+				{
+					// If the content is editable, render the inputs
+				}
 				{edit && (
 					<div className="flex gap-3">
 						<button
@@ -128,9 +123,9 @@ const ContentGroup: React.FC<IProps> = ({
 						>
 							Cancel
 						</button>
-						{/**
-						 * If the content is editable, render the inputs
-						 */}
+						{
+							// If the content is editable, render the inputs
+						}
 						{saveButton && (
 							<button
 								title="Edit"
@@ -152,18 +147,18 @@ const ContentGroup: React.FC<IProps> = ({
 				<label htmlFor={id} className="font-bold">
 					{label}
 				</label>
-				{/**
-				 * If the content is editable, render the edit actions
-				 */}
+				{
+					// If the content is editable, render the edit actions
+				}
 				{hasEditableContent && <EditActions />}
 			</div>
-			{/**
-			 *  If the content is editable, render the inputs
-			 */}
+			{
+				//  If the content is editable, render the inputs
+			}
 			{!!edit && <Inputs />}
-			{/**
-			 * If the content is not editable, render the children
-			 */}
+			{
+				// If the content is not editable, render the children
+			}
 			{!edit && children}
 		</div>
 	)

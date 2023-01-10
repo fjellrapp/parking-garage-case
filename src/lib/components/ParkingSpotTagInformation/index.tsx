@@ -1,4 +1,8 @@
 import React from 'react'
+/**
+ *  Displays the information about the parking spot tags
+ * @returns {JSX.Element}
+ */
 const ParkingSpotTagInformation = () => (
 	<div className="flex justify-end gap-3">
 		<span
