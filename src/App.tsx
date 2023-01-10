@@ -67,7 +67,7 @@ function App() {
 
 				<ParkingSpotTagInformation />
 
-				<LayoutFlexCol classNames="items-center gap-10 md:flex-row">
+				<LayoutFlexCol classNames="items-center gap-10 md:flex-row pb-8">
 					{garage.map((floor, index) => (
 						<LayoutGridMain key={`${floor.name}-${index}`}>
 							<GarageFloor floor={floor} />
