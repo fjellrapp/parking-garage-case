@@ -59,9 +59,9 @@ const ContentGroup: React.FC<IProps> = ({
 	 * @returns {JSX.Element}
 	 */
 	const Inputs = () => {
-		return (
-			<Fragment>
-				{type === 'select' && (
+		switch (type) {
+			case 'select': {
+				return (
 					<select
 						id={id}
 						name={id}
@@ -79,8 +79,10 @@ const ContentGroup: React.FC<IProps> = ({
 						<option value="3">HC</option>
 						<option value="4">Motorcycle</option>
 					</select>
-				)}
-				{type !== 'select' && (
+				)
+			}
+			case 'number': {
+				return (
 					<input
 						id={id}
 						name={id}
@@ -91,9 +93,12 @@ const ContentGroup: React.FC<IProps> = ({
 							editableContent ? (editableContent as number) : ''
 						}
 					/>
-				)}
-			</Fragment>
-		)
+				)
+			}
+			default: {
+				return null
+			}
+		}
 	}
 	/**
 	 * Renders the edit actions

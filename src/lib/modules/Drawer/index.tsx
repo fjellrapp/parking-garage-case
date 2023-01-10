@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { IParkingSpot, ParkingSpotTypeMapEnum } from '../../models/garage'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { updateDuration, updateFee } from '../../store/slices/garageSlice'
@@ -26,6 +26,47 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 		(state) => state.garageSlice.currentSelection
 	)
 
+	// Updates the duration in the store, and calculates the fee.
+	const setUpdatedDurationAndCalculateRates = useCallback(() => {
+		if (spot?.occupied && spot.occupiedAtDateTime) {
+			// Calculates the time delta between now and the occupiedAtDateTime
+			const timeDelta = getTimeDelta()
+			timeDelta && dispatch(updateDuration(timeDelta))
+		}
+	}, [dispatch, spot])
+
+	/**
+	 * @param hours The number of hours to calculate the fee for
+	 * @returns The fee for the given number of hours
+	 */
+	const calculateFee = useCallback((hours: number) => {
+		let fee = 0
+		if (hours > 0) {
+			// The first hour is 50, the next two are 30, and the rest are 10.
+			fee += 50
+			if (hours > 1) {
+				// The Math.min is used to make sure that the fee is not calculated for more than two hours.
+				fee += 30 * Math.min(2, hours - 1)
+			}
+			if (hours > 3) {
+				// 10 nok for the remaining hours
+				fee += 10 * (hours - 3)
+			}
+		}
+		return fee
+	}, [])
+
+	/**
+	 * @returns The time delta between now and the moment the parking space was occupied
+	 */
+
+	const getTimeDelta = useCallback(() => {
+		if (spot?.occupiedAtDateTime) {
+			const now = Date.now()
+			return Math.abs(now - spot.occupiedAtDateTime)
+		}
+	}, [spot])
+
 	// the useEffect hook is used to update the duration and fee when the drawer is opened.
 	// The duration is updated when the drawer is opened, and the fee is updated when the duration is updated.
 	useEffect(() => {
@@ -40,49 +81,6 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 		}
 	}, [currentState])
 
-	// Updates the duration in the store, and calculates the fee.
-	const setUpdatedDurationAndCalculateRates = () => {
-		if (spot?.occupied && spot.occupiedAtDateTime) {
-			// The time delta in milliseconds
-			const timeDelta = getTimeDelta()
-			// Dispatch the timedelta to the current selection in the store
-			timeDelta && dispatch(updateDuration(timeDelta))
-		}
-	}
-
-	/**
-	 * @param hours The number of hours to calculate the fee for
-	 * @returns The fee for the given number of hours
-	 */
-	const calculateFee = (hours: number) => {
-		let fee = 0
-		// First checks if the hours are greater than zero
-		if (hours > 0) {
-			//  Adds 50 to the first hour
-			fee += 50
-			if (hours > 1) {
-				// If hours are greater than 1 (hours two and three). Add 30 to the fee. Multiply by either 2 or hours - 1.
-				// Whichever is smaller.
-
-				fee += 30 * Math.min(2, hours - 1)
-			}
-			// Adds the fee for the remaining hours
-			if (hours > 3) {
-				fee += 10 * (hours - 3)
-			}
-		}
-		return fee
-	}
-
-	/**
-	 * @returns The time delta between now and the moment the parking space was occupied
-	 */
-	const getTimeDelta = () => {
-		if (spot?.occupiedAtDateTime) {
-			const now = Date.now()
-			return Math.abs(now - spot.occupiedAtDateTime)
-		}
-	}
 	return (
 		<DrawerContainers isOpen={isOpen}>
 			{

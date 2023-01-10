@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
 	IParkingSpot,
 	ParkingSpotTypeEnum,
@@ -25,8 +25,8 @@ interface IProps {
  */
 const EditableContent: React.FC<IProps> = ({ spot }) => {
 	// The fee and type are stored in the state, and updated when the user changes the value.
-	const [fee, editFee] = React.useState<number | null>(spot.fee)
-	const [type, editType] = React.useState<number | null>(spot.type)
+	const [fee, setFee] = React.useState<number | null>(spot.fee)
+	const [type, setType] = React.useState<number | null>(spot.type)
 	// The isNewSpot variable is used to determine if the spot is new or not.
 	const isNewSpot = spot?.type === null
 
@@ -35,38 +35,42 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 	useEffect(() => {
 		// This will sync the spot-data with the local state
 		if (spot.fee) {
-			editFee(spot.fee)
+			setFee(spot.fee)
 		}
 		if (spot.type) {
-			editType(spot.type)
+			setType(spot.type)
 		}
 	}, [spot.fee, spot.type])
 
-	// The handleEditFee function is used to update the fee in the state
-	// @param e The event object
-	const handleEditFee = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const fee = Number(e.target.value)
-		editFee(fee)
-	}
+	// The handleEditFee function is used to update the fee in the state.
+	// It uses useCallback to prevent unnecessary re-renders.
+	const handleEditFee = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const fee = Number(e.target.value)
+			setFee(fee)
+		},
+		[setFee]
+	)
 
-	// The handleSaveFee function is used to save the fee in the store
-	const handleCreateNewSpot = () => {
+	// The handleCreateNewSpot function is used to create a new spot.
+	const handleCreateNewSpot = useCallback(() => {
 		const newSpot: IParkingSpot = {
 			...spot,
 			type: type as ParkingSpotTypeEnum,
 			fee: fee as number,
 		}
 		dispatch(saveNewSpot(newSpot))
-	}
+	}, [dispatch, spot, type, fee])
 
-	/**
-	 *  The handleEditType function is used to update the type in the state
-	 * @param e The event object
-	 */
-	const handleEditType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const type = Number(e.target.value)
-		editType(type)
-	}
+	// The handleEditType function is used to update the type in the state.
+	// The type is converted to a number, since the value is a string.
+	const handleEditType = useCallback(
+		(e: React.ChangeEvent<HTMLSelectElement>) => {
+			const type = Number(e.target.value)
+			setType(type)
+		},
+		[setType]
+	)
 	return (
 		// The content is displayed in a flex column, with a gap of 5. The overflow is set to auto, so that the content is scrollable.
 		<div className="mx-5 flex flex-col gap-5 overflow-y-auto py-6 pr-0 scrollbar scrollbar-thin scrollbar-track-white  scrollbar-thumb-slate-300">
@@ -104,7 +108,7 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 					handleEditFee(e as React.ChangeEvent<HTMLInputElement>)
 				}
 				onSave={() => fee && dispatch(updateFee(fee))}
-				onCancel={() => (spot.fee ? editFee(spot.fee) : editFee(null))}
+				onCancel={() => (spot.fee ? setFee(spot.fee) : setFee(null))}
 			>
 				NOK {spot?.fee},-
 			</ContentGroup>
@@ -120,7 +124,7 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 				onSave={() =>
 					dispatch(updateSpotType(type as ParkingSpotTypeEnum))
 				}
-				onCancel={() => (spot.type ? editType(type) : editType(null))}
+				onCancel={() => (spot.type ? setType(type) : setType(null))}
 			>
 				{spot?.type
 					? ParkingSpotTypeMapEnum[spot.type]
@@ -135,7 +139,7 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 				// The title prop is used to display a tooltip if the type is not selected.
 			}
 			{isNewSpot && (
-				<div className="fixed bottom-0 right-0 m-5 flex justify-end">
+				<div className="fixed bottom-0 right-0  m-5 flex justify-end md:right-[20%]">
 					<button
 						title={type === null ? 'Select a type' : 'Submit'}
 						role="button"

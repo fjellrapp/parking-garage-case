@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { IGarageFloor, IParkingSpot } from '../../models/garage'
 import ParkingSpot from '../ParkingSpot'
 import { initEmptyParkingspot } from '../../store/init'
@@ -54,12 +54,12 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 	}, [newSpots])
 
 	// The createAndSetNewSpot function is used to create a new spot and set it in the state.
-	const createAndSetNewSpot = () => {
+	const createAndSetNewSpot = useCallback(() => {
 		const createdSpots = createSpots()
 		if (createdSpots) {
 			setNewSpots([createdSpots])
 		}
-	}
+	}, [canCreateNSpots])
 
 	return (
 		<div className="flex flex-col">
