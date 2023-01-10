@@ -37,21 +37,23 @@ const ParkingSpot: React.FC<IProps> = ({ spot }) => {
 
 	// The parking spot component returns a button to represent the parking spot, with the appropriate styles
 	return (
-		<div className="my-1 mx-7">
+		<div className="my-1 mx-4">
 			{
 				// If the spot is new, display the add button, otherwise display the button as a parking spot
 			}
 			{!spot.type ? (
 				<button
-					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs leading-relaxed text-white text-black outline-dotted outline-2 outline-gray-700 ${currentlySelectedStyles()} `}
+					className={`h-10 w-24 min-w-full rounded-md border-none p-2 text-xs leading-relaxed text-white text-black outline-dotted outline-2 outline-gray-700 hover:outline-4 ${currentlySelectedStyles()} `}
 					onClick={() => spot && dispatch(addNewSpot(spot))}
 				>
 					Add
 				</button>
 			) : (
 				<button
-					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs font-semibold leading-relaxed text-white ${currentlySelectedStyles()} ${
-						spot.occupied ? 'bg-red-600' : ' bg-blue-600'
+					className={`h-10 w-24 min-w-full rounded-md border-none p-2 text-xs font-semibold leading-relaxed text-white ${currentlySelectedStyles()} ${
+						spot.occupied
+							? 'bg-red-600 hover:bg-red-800'
+							: ' bg-blue-600 hover:bg-blue-800'
 					}`}
 					onClick={() => dispatch(addCurrentSelection(spot))}
 				>
