@@ -46,8 +46,6 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 		}
 	}, [newSpots])
 
-	console.log(allSpots)
-
 	return (
 		<div className="flex flex-col">
 			<div className="flex items-center justify-between">

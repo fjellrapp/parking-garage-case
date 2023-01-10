@@ -5,27 +5,35 @@ interface IProps {
 	type: HTMLInputTypeAttribute
 	editableContent?: string | number | undefined | null
 	children: ReactNode
-	onChange: (
+	saveButton?: boolean
+	onChange?: (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => void
 	onSave?: () => void
+	onCancel?: () => void
 }
 const ContentGroup: React.FC<IProps> = ({
 	label,
 	id,
 	type,
 	editableContent,
+	saveButton = true,
 	onChange,
 	onSave,
+	onCancel,
 	children,
 }) => {
 	const [edit, setEdit] = React.useState(false)
 
-	const hasEditableContent =
-		editableContent !== undefined && editableContent !== null
+	const hasEditableContent = editableContent !== undefined
 
 	const handleSave = () => {
 		onSave && onSave()
+		setEdit(false)
+	}
+
+	const handleCancel = () => {
+		onCancel && onCancel()
 		setEdit(false)
 	}
 
@@ -38,8 +46,13 @@ const ContentGroup: React.FC<IProps> = ({
 						name={id}
 						className="w-[40%] rounded-md border border-gray-300 p-2"
 						onChange={(e) => onChange(e)}
-						value={editableContent as number}
+						value={
+							editableContent ? (editableContent as number) : ''
+						}
 					>
+						<option value="" disabled defaultChecked>
+							Select
+						</option>
 						<option value="1">Compact</option>
 						<option value="2">Large</option>
 						<option value="3">HC</option>
@@ -79,18 +92,20 @@ const ContentGroup: React.FC<IProps> = ({
 							title="Edit"
 							className="text-blue-600 underline hover:text-blue-800"
 							aria-label="Edit"
-							onClick={() => setEdit(false)}
+							onClick={handleCancel}
 						>
 							Cancel
 						</button>
-						<button
-							title="Edit"
-							className="text-blue-600 underline hover:text-blue-800"
-							aria-label="Edit"
-							onClick={handleSave}
-						>
-							Save
-						</button>
+						{saveButton && (
+							<button
+								title="Edit"
+								className="text-blue-600 underline hover:text-blue-800"
+								aria-label="Edit"
+								onClick={handleSave}
+							>
+								Save
+							</button>
+						)}
 					</div>
 				)}
 			</Fragment>

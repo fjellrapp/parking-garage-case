@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { IParkingSpot, ParkingSpotTypeMapEnum } from '../../models/garage'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { addCurrentSelection, addNewSpot } from '../../store/slices/garageSlice'
 interface IProps {
 	spot: IParkingSpot
@@ -12,10 +12,6 @@ const ParkingSpot: React.FC<IProps> = ({ spot }) => {
 	const currentSelection = useAppSelector(
 		(state) => state.garageSlice.currentSelection
 	)
-
-	useEffect(() => {
-		console.log('update', spot.type)
-	}, [spot.type])
 
 	const isSelected = currentSelection?.id === spot.id
 

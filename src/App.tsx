@@ -16,7 +16,6 @@ function App() {
 	)
 	const newSpot = useAppSelector((state) => state.garageSlice.newSelection)
 	const dispatch = useAppDispatch()
-	console.log('the new', newSpot)
 
 	const availabilityAllFloors = garage.reduce(
 		(prev, curr) => curr.available + prev,
