@@ -11,6 +11,7 @@ Technologies:
 
 Project structure
 
+-   public
 -   src
     -   lib
         -   components (_Layouts and smaller components_)
@@ -31,3 +32,4 @@ Project structure
     -   App.tsx
     -   index.css
     -   vite.env.d.ts
+-   ... configs

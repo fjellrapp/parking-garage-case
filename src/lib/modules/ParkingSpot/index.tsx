@@ -43,14 +43,14 @@ const ParkingSpot: React.FC<IProps> = ({ spot }) => {
 			}
 			{!spot.type ? (
 				<button
-					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs text-white text-black outline-dotted outline-2 outline-gray-700 ${currentlySelectedStyles()} `}
+					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs leading-relaxed text-white text-black outline-dotted outline-2 outline-gray-700 ${currentlySelectedStyles()} `}
 					onClick={() => spot && dispatch(addNewSpot(spot))}
 				>
 					Add
 				</button>
 			) : (
 				<button
-					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs font-semibold text-white ${currentlySelectedStyles()} ${
+					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs font-semibold leading-relaxed text-white ${currentlySelectedStyles()} ${
 						spot.occupied ? 'bg-red-600' : ' bg-blue-600'
 					}`}
 					onClick={() => dispatch(addCurrentSelection(spot))}
