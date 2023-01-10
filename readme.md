@@ -2,14 +2,14 @@
 
 Deployed on Netlify at: https://monumental-haupia-f503af.netlify.app/
 
-Technologies:
+### Technologies:
 
 -   React with Vite
 -   Typescript
 -   Redux-toolkit
 -   Tailwind
 
-Project structure
+### Project structure
 
 -   public
 -   src
