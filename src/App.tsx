@@ -8,21 +8,41 @@ import {
 	cancelNewSpot,
 	removeCurrentSelection,
 } from './lib/store/slices/garageSlice'
+import CurrentAvailabilityHeader from './lib/components/CurrentAvailabilityHeader'
 
 function App() {
+	/** The garage selector. Maps a garage for each floor, given as input to <GarageFloor /> */
 	const garage = useAppSelector((state) => state).garageSlice.garage
+	/**
+	 * The selected parking spot selector. This is the parking spot that is currently selected.
+	 */
 	const selectedParkingSpot = useAppSelector(
 		(state) => state.garageSlice.currentSelection
 	)
+	/**
+	 * The new parking spot selector. This is the new, unsaved parking spot that is currently selected.
+	 */
 	const newSpot = useAppSelector((state) => state.garageSlice.newSelection)
+	/**
+	 * The dispatch hook. This is used to dispatch actions to the store.
+	 */
 	const dispatch = useAppDispatch()
 
+	/**
+	 * The total number of available spots on all floors.
+	 */
 	const availabilityAllFloors = garage.reduce(
 		(prev, curr) => curr.available + prev,
 		0
 	)
+	/**
+	 * The total number of spots on all floors.
+	 */
 	const totalSpots = garage.reduce((prev, curr) => curr.capacity + prev, 0)
 
+	/**
+	 * Event handler for cancelling the current selection.
+	 */
 	const handleCancel = () => {
 		if (newSpot) {
 			dispatch(cancelNewSpot())
@@ -37,12 +57,11 @@ function App() {
 			<div className="flex flex-col gap-6">
 				<Heading />
 
-				<p className=" font-sans">
-					Current availability on all floors:{' '}
-					<span className=" font-bold">
-						{availabilityAllFloors} / {totalSpots}
-					</span>
-				</p>
+				<CurrentAvailabilityHeader
+					totalSpots={totalSpots}
+					availabilityAllFloors={availabilityAllFloors}
+				/>
+
 				<div className="flex gap-3">
 					<span
 						className={`h-fit w-fit rounded-md bg-red-600 p-2 font-semibold text-white`}

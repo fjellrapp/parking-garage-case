@@ -13,13 +13,10 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 	const capacity = floor.capacity
 	const canCreateNSpots = floor.capacity - floor.spots.length
 
-	const createNSpots = (n: number): IParkingSpot[] => {
-		const spots = []
-		for (let i = 0; i < n; i++) {
-			const startingIndex = floor.spots[floor.spots.length - 1].id + 1
-			spots.push(initEmptyParkingspot(floor.id, startingIndex, i))
-		}
-		return spots
+	const createSpots = (): IParkingSpot | null => {
+		if (!canCreateNSpots) return null
+		const index = floor.spots[floor.spots.length - 1].id + 1
+		return initEmptyParkingspot(floor.id, index)
 	}
 
 	useEffect(() => {
@@ -41,9 +38,9 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 	}, [newSpots])
 
 	const createAndSetNewSpot = () => {
-		const createdSpots = createNSpots(canCreateNSpots)
-		if (createdSpots.length) {
-			setNewSpots(createdSpots)
+		const createdSpots = createSpots()
+		if (createdSpots) {
+			setNewSpots([createdSpots])
 		}
 	}
 

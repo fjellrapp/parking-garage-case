@@ -10,15 +10,3 @@
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-text-size-adjust: 100%;
 }
-
-body::-webkit-scrollbar-track {
-	background: rgb(86, 10, 10);
-	border-radius: 5px;
-	padding: none;
-}
-
-*::-webkit-scrollbar-thumb {
-	background-color: black;
-	border-radius: 14px;
-	padding: none;
-}

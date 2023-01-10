@@ -205,13 +205,9 @@ export const initial: IGarageFloor[] = [
  * @param {number} currentSpotsLength - The current length of the spots array
  * @param {number} index - The index of the current spot
  */
-export const initEmptyParkingspot = (
-	floor: number,
-	startingIndex: number,
-	index: number
-) => {
+export const initEmptyParkingspot = (floor: number, startingIndex: number) => {
 	const emptySpot = {
-		id: startingIndex + index,
+		id: startingIndex + 1,
 		type: null,
 		occupied: false,
 		occupiedAtDateTime: null,
