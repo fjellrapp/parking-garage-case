@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import garageSlice from './slices/garageSlice'
 // ...
 
@@ -6,7 +6,6 @@ export const store = configureStore({
 	reducer: {
 		garageSlice,
 	},
-	middleware: () => getDefaultMiddleware(),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -1,4 +1,17 @@
 import React, { Fragment, HTMLInputTypeAttribute, ReactNode } from 'react'
+
+/**
+ * @param {string} label - Label for the content group
+ * @param {string} id - Id for the content group
+ * @param {HTMLInputTypeAttribute} type - Type of input
+ * @param {string | number | undefined | null} editableContent - Content to be edited
+ * @param {ReactNode} children - Content to be displayed
+ * @param {boolean} saveButton - Determines if the save button should be displayed
+ * @param {function} onChange - Function to be called when the value of the input changes
+ * @param {function} onSave - Function to be called when the save button is clicked
+ * @param {function} onCancel - Function to be called when the cancel button is clicked
+ *
+ */
 interface IProps {
 	label: string
 	id: 'rate' | 'duration' | 'type' | 'occupiedAtDateTime'
@@ -12,6 +25,7 @@ interface IProps {
 	onSave?: () => void
 	onCancel?: () => void
 }
+
 const ContentGroup: React.FC<IProps> = ({
 	label,
 	id,
@@ -23,20 +37,32 @@ const ContentGroup: React.FC<IProps> = ({
 	onCancel,
 	children,
 }) => {
+	/**
+	 * Determines if the content is editable or not
+	 */
 	const [edit, setEdit] = React.useState(false)
-
+	/**
+	 * Determines if the content is editable or not
+	 */
 	const hasEditableContent = editableContent !== undefined
-
+	/**
+	 * Handles the save button click
+	 */
 	const handleSave = () => {
 		onSave && onSave()
 		setEdit(false)
 	}
-
+	/**
+	 * Handles the cancel button click
+	 */
 	const handleCancel = () => {
 		onCancel && onCancel()
 		setEdit(false)
 	}
-
+	/**
+	 * Renders the inputs
+	 * @returns {JSX.Element}
+	 */
 	const Inputs = () => {
 		return (
 			<Fragment>
@@ -72,7 +98,10 @@ const ContentGroup: React.FC<IProps> = ({
 			</Fragment>
 		)
 	}
-
+	/**
+	 * Renders the edit actions
+	 * @returns {JSX.Element}
+	 */
 	const EditActions = () => {
 		return (
 			<Fragment>
@@ -86,6 +115,9 @@ const ContentGroup: React.FC<IProps> = ({
 						Edit
 					</button>
 				)}
+				{/**
+				 * If the content is editable, render the inputs
+				 */}
 				{edit && (
 					<div className="flex gap-3">
 						<button
@@ -96,6 +128,9 @@ const ContentGroup: React.FC<IProps> = ({
 						>
 							Cancel
 						</button>
+						{/**
+						 * If the content is editable, render the inputs
+						 */}
 						{saveButton && (
 							<button
 								title="Edit"
@@ -117,9 +152,18 @@ const ContentGroup: React.FC<IProps> = ({
 				<label htmlFor={id} className="font-bold">
 					{label}
 				</label>
+				{/**
+				 * If the content is editable, render the edit actions
+				 */}
 				{hasEditableContent && <EditActions />}
 			</div>
+			{/**
+			 *  If the content is editable, render the inputs
+			 */}
 			{!!edit && <Inputs />}
+			{/**
+			 * If the content is not editable, render the children
+			 */}
 			{!edit && children}
 		</div>
 	)

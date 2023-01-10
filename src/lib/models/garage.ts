@@ -1,3 +1,11 @@
+/**
+ * @property name: The name of the garage
+ * @property id: The id of the garage
+ * @property capacity: The total capacity of the garage
+ * @property available: The total available spots in the garage
+ * @property spots: An array of parking spots
+ * @property floors: An array of floors
+ */
 export interface IGarageFloor {
 	name: string
 	id: number
@@ -16,7 +24,7 @@ export interface IGarageFloor {
  */
 export interface IParkingSpot {
 	id: number
-	type: ParkingSpotType | null
+	type: ParkingSpotTypeEnum | null
 	occupied: boolean
 	duration: number
 	occupiedAtDateTime: number | null
@@ -24,14 +32,19 @@ export interface IParkingSpot {
 	floor: number
 }
 
-/** Each parking spot type is defined as enums */
-export enum ParkingSpotType {
+/**
+ * This is an enum that is used to determine the type of parking spot
+ *
+ */
+export enum ParkingSpotTypeEnum {
 	COMPACT = 1,
 	LARGE = 2,
 	HANDICAP = 3,
 	MOTORCYCLE = 4,
 }
-
+/**
+ * This is a map enum that is used to map the ParkingSpotTypeEnum enum to a string
+ */
 export enum ParkingSpotTypeMapEnum {
 	'Compact' = 1,
 	'Large' = 2,

@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from './lib/components/Layout'
+import Layout from './lib/components/Layout/LayoutMain'
 import { useAppDispatch, useAppSelector } from './lib/hooks'
 import GarageFloor from './lib/components/GarageFloor'
 import Heading from './lib/components/Heading'
@@ -9,6 +9,9 @@ import {
 	removeCurrentSelection,
 } from './lib/store/slices/garageSlice'
 import CurrentAvailabilityHeader from './lib/components/CurrentAvailabilityHeader'
+import ParkingSpotTagInformation from './lib/components/ParkingSpotTagInformation'
+import LayoutFlexCol from './lib/components/Layout/LayoutFlexCol'
+import LayoutGridMain from './lib/components/Layout/LayoutGridMain'
 
 function App() {
 	/** The garage selector. Maps a garage for each floor, given as input to <GarageFloor /> */
@@ -54,7 +57,7 @@ function App() {
 
 	return (
 		<Layout>
-			<div className="flex flex-col gap-6">
+			<LayoutFlexCol classNames="gap-6">
 				<Heading />
 
 				<CurrentAvailabilityHeader
@@ -62,28 +65,16 @@ function App() {
 					availabilityAllFloors={availabilityAllFloors}
 				/>
 
-				<div className="flex gap-3">
-					<span
-						className={`h-fit w-fit rounded-md bg-red-600 p-2 font-semibold text-white`}
-					>
-						Occupied
-					</span>
-					<span className="h-fit w-fit rounded-md bg-blue-600 p-2 font-semibold text-white">
-						Available
-					</span>
-				</div>
+				<ParkingSpotTagInformation />
 
-				<div className="flex flex-col items-center gap-10 md:flex-row">
+				<LayoutFlexCol classNames="items-center gap-10 md:flex-row">
 					{garage.map((floor, index) => (
-						<div
-							className={`grid min-w-[40vw] grid-rows-1 place-content-center place-items-center gap-10 bg-slate-50 p-10`}
-							key={`${floor.name}-${index}`}
-						>
+						<LayoutGridMain key={`${floor.name}-${index}`}>
 							<GarageFloor floor={floor} />
-						</div>
+						</LayoutGridMain>
 					))}
-				</div>
-			</div>
+				</LayoutFlexCol>
+			</LayoutFlexCol>
 			<Drawer
 				isOpen={Boolean(selectedParkingSpot || newSpot)}
 				spot={selectedParkingSpot ?? newSpot}
