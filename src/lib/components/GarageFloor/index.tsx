@@ -25,19 +25,13 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 	useEffect(() => {
 		if (floor.spots.length) {
 			setAllSpots(floor.spots)
-			const createdSpots = createNSpots(canCreateNSpots)
-			if (createdSpots.length) {
-				setNewSpots(createdSpots)
-			}
+			createAndSetNewSpot()
 		}
 	}, [floor.spots])
 
 	useEffect(() => {
 		if (newSpots.length) return
-		const createdSpots = createNSpots(canCreateNSpots)
-		if (createdSpots.length) {
-			setNewSpots(createdSpots)
-		}
+		createAndSetNewSpot()
 	}, [canCreateNSpots])
 
 	useEffect(() => {
@@ -45,6 +39,13 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 			setAllSpots([...allSpots, ...newSpots])
 		}
 	}, [newSpots])
+
+	const createAndSetNewSpot = () => {
+		const createdSpots = createNSpots(canCreateNSpots)
+		if (createdSpots.length) {
+			setNewSpots(createdSpots)
+		}
+	}
 
 	return (
 		<div className="flex flex-col">
