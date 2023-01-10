@@ -14,6 +14,17 @@ const initialState: GarageStore = {
 
 // Reducers
 
+const addNewSpotReducer = (
+	state: GarageStore,
+	action: PayloadAction<IParkingSpot>
+) => {
+	const { floor } = action.payload
+	const floorIndex = state.garage.findIndex((f) => f.id === floor)
+	if (floorIndex !== -1) {
+		state.garage[floorIndex].spots.push(action.payload)
+		state.garage[floorIndex].available += 1
+	}
+}
 const addCurrentSelectionReducer = (
 	state: GarageStore,
 	action: PayloadAction<IParkingSpot>
@@ -52,9 +63,11 @@ export const garageSlice = createSlice({
 		removeCurrentSelection: removeCurrentSelectionReducer,
 		updateDuration: updateDurationReducer,
 		updateFee: updateFeeReducer,
+		addNewSpot: addNewSpotReducer,
 	},
 })
 export const {
+	addNewSpot,
 	addCurrentSelection,
 	removeCurrentSelection,
 	updateDuration,

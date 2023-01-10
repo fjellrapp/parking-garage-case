@@ -1,5 +1,6 @@
 export interface IGarageFloor {
 	name: string
+	id: number
 	capacity: number
 	available: number
 	spots: IParkingSpot[]
@@ -14,6 +15,7 @@ export interface IGarageFloor {
  * @property floor
  */
 export interface IParkingSpot {
+	id: number
 	type: ParkingSpotType
 	occupied: boolean
 	duration: number
