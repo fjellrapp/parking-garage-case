@@ -16,7 +16,7 @@ export interface IGarageFloor {
  */
 export interface IParkingSpot {
 	id: number
-	type: ParkingSpotType
+	type: ParkingSpotType | null
 	occupied: boolean
 	duration: number
 	occupiedAtDateTime: number | null

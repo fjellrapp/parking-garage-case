@@ -4,21 +4,34 @@ import { useAppDispatch, useAppSelector } from './lib/hooks'
 import GarageFloor from './lib/components/GarageFloor'
 import Heading from './lib/components/Heading'
 import Drawer from './lib/components/Drawer'
-import { removeCurrentSelection } from './lib/store/slices/garageSlice'
+import {
+	cancelNewSpot,
+	removeCurrentSelection,
+} from './lib/store/slices/garageSlice'
 
 function App() {
 	const garage = useAppSelector((state) => state).garageSlice.garage
 	const selectedParkingSpot = useAppSelector(
 		(state) => state.garageSlice.currentSelection
 	)
-
+	const newSpot = useAppSelector((state) => state.garageSlice.newSelection)
 	const dispatch = useAppDispatch()
+	console.log('the new', newSpot)
 
 	const availabilityAllFloors = garage.reduce(
 		(prev, curr) => curr.available + prev,
 		0
 	)
 	const totalSpots = garage.reduce((prev, curr) => curr.capacity + prev, 0)
+
+	const handleCancel = () => {
+		if (newSpot) {
+			dispatch(cancelNewSpot())
+		}
+		if (selectedParkingSpot) {
+			dispatch(removeCurrentSelection())
+		}
+	}
 
 	return (
 		<Layout>
@@ -33,11 +46,11 @@ function App() {
 				</p>
 				<div className="flex gap-3">
 					<span
-						className={`h-fit w-fit rounded-md bg-red-400 p-2 text-white`}
+						className={`h-fit w-fit rounded-md bg-red-500 p-2 text-white`}
 					>
-						Unavailable
+						Occupied
 					</span>
-					<span className="h-fit w-fit rounded-md bg-blue-400 p-2 text-white">
+					<span className="h-fit w-fit rounded-md bg-blue-500 p-2 text-white">
 						Available
 					</span>
 				</div>
@@ -54,10 +67,9 @@ function App() {
 				</div>
 			</div>
 			<Drawer
-				isOpen={Boolean(selectedParkingSpot)}
-				spot={selectedParkingSpot}
-				onCancel={() => dispatch(removeCurrentSelection())}
-				onSubmit={() => console.log('submit')}
+				isOpen={Boolean(selectedParkingSpot || newSpot)}
+				spot={selectedParkingSpot ?? newSpot}
+				onCancel={handleCancel}
 			/>
 		</Layout>
 	)

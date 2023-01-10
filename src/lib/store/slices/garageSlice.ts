@@ -5,11 +5,13 @@ import { initial } from '../init'
 interface GarageStore {
 	garage: IGarageFloor[]
 	currentSelection: IParkingSpot | null
+	newSelection: IParkingSpot | null
 }
 
 const initialState: GarageStore = {
 	garage: initial,
 	currentSelection: null,
+	newSelection: null,
 }
 
 // Reducers
@@ -19,10 +21,10 @@ const addNewSpotReducer = (
 	action: PayloadAction<IParkingSpot>
 ) => {
 	const { floor } = action.payload
+	console.log(action.payload)
 	const floorIndex = state.garage.findIndex((f) => f.id === floor)
 	if (floorIndex !== -1) {
-		state.garage[floorIndex].spots.push(action.payload)
-		state.garage[floorIndex].available += 1
+		state.newSelection = action.payload
 	}
 }
 const addCurrentSelectionReducer = (
@@ -34,6 +36,10 @@ const addCurrentSelectionReducer = (
 
 const removeCurrentSelectionReducer = (state: GarageStore) => {
 	state.currentSelection = null
+}
+
+const cancelNewSpotReducer = (state: GarageStore) => {
+	state.newSelection = null
 }
 
 const updateDurationReducer = (
@@ -54,6 +60,26 @@ const updateFeeReducer = (
 	}
 }
 
+const updateSpotTypeReducer = (
+	state: GarageStore,
+	action: PayloadAction<number>
+) => {
+	if (state.currentSelection) {
+		state.currentSelection.type = action.payload
+		const floor = state.garage.find(
+			(f) => f.id === state.currentSelection?.floor
+		)
+		if (floor?.spots.length) {
+			const spot = floor.spots.find(
+				(s) => s.id === state.currentSelection?.id
+			)
+			if (spot) {
+				spot.type = action.payload
+			}
+		}
+	}
+}
+
 // Slice
 export const garageSlice = createSlice({
 	name: 'garage',
@@ -61,8 +87,10 @@ export const garageSlice = createSlice({
 	reducers: {
 		addCurrentSelection: addCurrentSelectionReducer,
 		removeCurrentSelection: removeCurrentSelectionReducer,
+		cancelNewSpot: cancelNewSpotReducer,
 		updateDuration: updateDurationReducer,
 		updateFee: updateFeeReducer,
+		updateSpotType: updateSpotTypeReducer,
 		addNewSpot: addNewSpotReducer,
 	},
 })
@@ -70,7 +98,9 @@ export const {
 	addNewSpot,
 	addCurrentSelection,
 	removeCurrentSelection,
+	cancelNewSpot,
 	updateDuration,
 	updateFee,
+	updateSpotType,
 } = garageSlice.actions
 export default garageSlice.reducer

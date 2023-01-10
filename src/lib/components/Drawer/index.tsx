@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { IParkingSpot, ParkingSpotTypeMapEnum } from '../../models/garage'
-import ContentGroup from '../ContentGroup'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import garageSlice, {
-	updateDuration,
-	updateFee,
-} from '../../store/slices/garageSlice'
+import { updateDuration, updateFee } from '../../store/slices/garageSlice'
 import { millisecondsToHours } from 'date-fns'
+import EditableContent from '../EditableContent'
 
 interface IProps {
 	isOpen: boolean
 	spot: IParkingSpot | null
-	onSubmit: () => void
 	onCancel: () => void
 }
 
@@ -20,14 +16,14 @@ interface IProps {
  * and enables viewing and editing it.
  * @param isOpen Specifies if the drawer is open or not
  * @param spot an object of Ispot
- * @param onSubmit Event handler for submitting changes
  * @param onCancel Event handler for closing the drawer
  */
-const Drawer: React.FC<IProps> = ({ isOpen, spot, onSubmit, onCancel }) => {
+const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 	const dispatch = useAppDispatch()
 	const currentState = useAppSelector(
 		(state) => state.garageSlice.currentSelection
 	)
+	const isNewSpot = spot?.type === null
 
 	useEffect(() => {
 		if (!currentState?.duration) {
@@ -87,12 +83,14 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onSubmit, onCancel }) => {
 				<div className=" m-5 flex  content-center items-center justify-between">
 					<div className="mr-4 flex gap-4 self-center">
 						<h3 className="self-center text-2xl font-semibold">
-							{spot?.type && ParkingSpotTypeMapEnum[spot.type]}{' '}
+							{spot?.type
+								? ParkingSpotTypeMapEnum[spot.type]
+								: 'New'}{' '}
 							spot in floor {spot?.floor}
 						</h3>
 						<span
 							className={` self-center rounded-lg p-2 text-white  ${
-								spot?.occupied ? 'bg-red-400' : 'bg-blue-500'
+								spot?.occupied ? 'bg-red-500' : 'bg-blue-500'
 							}`}
 						>
 							{spot?.occupied ? 'Occupied' : 'Available'}
@@ -107,44 +105,7 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onSubmit, onCancel }) => {
 					</button>
 				</div>
 
-				{spot && (
-					<div className="mx-5 flex flex-col gap-5">
-						{spot?.duration !== null && (
-							<ContentGroup
-								label="Duration"
-								id="duration"
-								editableContent={spot.duration}
-								type="number"
-								onChange={() => console.log('cah')}
-							>
-								{millisecondsToHours(spot.duration)} hours
-							</ContentGroup>
-						)}
-
-						{spot?.fee !== null && (
-							<ContentGroup
-								label="Current rate"
-								id="rate"
-								editableContent={spot.fee}
-								type="number"
-								onChange={() => console.log('cah')}
-							>
-								NOK {spot?.fee},-
-							</ContentGroup>
-						)}
-						{spot?.type && (
-							<ContentGroup
-								label="Parking spot type"
-								id="type"
-								editableContent={spot.fee}
-								type="number"
-								onChange={() => console.log('cah')}
-							>
-								{ParkingSpotTypeMapEnum[spot.type]}
-							</ContentGroup>
-						)}
-					</div>
-				)}
+				{spot && <EditableContent spot={spot} />}
 			</div>
 		</div>
 	)

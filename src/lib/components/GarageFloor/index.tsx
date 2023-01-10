@@ -7,27 +7,46 @@ interface IProps {
 	floor: IGarageFloor
 }
 const GarageFloor: React.FC<IProps> = ({ floor }) => {
+	const [allSpots, setAllSpots] = useState<IParkingSpot[]>([])
 	const [newSpots, setNewSpots] = useState<IParkingSpot[]>([])
 	const available = floor.available
 	const capacity = floor.capacity
 	const canCreateNSpots = floor.capacity - floor.spots.length
-	console.log(floor.capacity, floor.spots.length)
 
 	const createNSpots = (n: number): IParkingSpot[] => {
 		const spots = []
 		for (let i = 0; i < n; i++) {
-			spots.push(initEmptyParkingspot(floor.id, floor.spots.length, i))
+			const startingIndex = floor.spots[floor.spots.length - 1].id + 1
+			spots.push(initEmptyParkingspot(floor.id, startingIndex, i))
 		}
-
 		return spots
 	}
 
 	useEffect(() => {
+		if (floor.spots.length) {
+			setAllSpots(floor.spots)
+			const createdSpots = createNSpots(canCreateNSpots)
+			if (createdSpots.length) {
+				setNewSpots(createdSpots)
+			}
+		}
+	}, [floor.spots])
+
+	useEffect(() => {
+		if (newSpots.length) return
 		const createdSpots = createNSpots(canCreateNSpots)
 		if (createdSpots.length) {
 			setNewSpots(createdSpots)
 		}
 	}, [canCreateNSpots])
+
+	useEffect(() => {
+		if (newSpots.length && allSpots.length < capacity) {
+			setAllSpots([...allSpots, ...newSpots])
+		}
+	}, [newSpots])
+
+	console.log(allSpots)
 
 	return (
 		<div className="flex flex-col">
@@ -40,18 +59,11 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 				</div>
 			</div>
 			<div className="grid grid-cols-2">
-				{floor.spots.map((spot) => (
+				{allSpots.map((spot) => (
 					<Fragment key={spot.id}>
 						<ParkingSpot spot={spot} />
 					</Fragment>
 				))}
-				{canCreateNSpots > 0 &&
-					newSpots.length &&
-					newSpots.map((spot) => (
-						<Fragment key={spot.id}>
-							<ParkingSpot spot={spot} newSpot />
-						</Fragment>
-					))}
 			</div>
 		</div>
 	)

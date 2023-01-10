@@ -1,35 +1,110 @@
-import React, { HTMLInputTypeAttribute, ReactNode } from 'react'
+import React, { Fragment, HTMLInputTypeAttribute, ReactNode } from 'react'
 interface IProps {
 	label: string
-	id: string
-	edit?: boolean
+	id: 'rate' | 'duration' | 'type' | 'occupiedAtDateTime'
 	type: HTMLInputTypeAttribute
-	editableContent?: string | number | undefined
+	editableContent?: string | number | undefined | null
 	children: ReactNode
-	onChange: () => void
+	onChange: (
+		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+	) => void
+	onSave?: () => void
 }
 const ContentGroup: React.FC<IProps> = ({
 	label,
 	id,
-	edit = false,
 	type,
 	editableContent,
 	onChange,
+	onSave,
 	children,
 }) => {
+	const [edit, setEdit] = React.useState(false)
+
+	const hasEditableContent =
+		editableContent !== undefined && editableContent !== null
+
+	const handleSave = () => {
+		onSave && onSave()
+		setEdit(false)
+	}
+
+	const Inputs = () => {
+		return (
+			<Fragment>
+				{type === 'select' && (
+					<select
+						id={id}
+						name={id}
+						className="w-[40%] rounded-md border border-gray-300 p-2"
+						onChange={(e) => onChange(e)}
+						value={editableContent as number}
+					>
+						<option value="1">Compact</option>
+						<option value="2">Large</option>
+						<option value="3">HC</option>
+						<option value="4">Motorcycle</option>
+					</select>
+				)}
+				{type !== 'select' && (
+					<input
+						id={id}
+						name={id}
+						type={type}
+						className="w-[40%] rounded-md border border-gray-300 p-2"
+						onChange={onChange}
+						value={editableContent as number}
+					/>
+				)}
+			</Fragment>
+		)
+	}
+
+	const EditActions = () => {
+		return (
+			<Fragment>
+				{!edit && (
+					<button
+						title="Edit"
+						className="text-blue-600 underline hover:text-blue-800"
+						aria-label="Edit"
+						onClick={() => setEdit(true)}
+					>
+						Edit
+					</button>
+				)}
+				{edit && (
+					<div className="flex gap-3">
+						<button
+							title="Edit"
+							className="text-blue-600 underline hover:text-blue-800"
+							aria-label="Edit"
+							onClick={() => setEdit(false)}
+						>
+							Cancel
+						</button>
+						<button
+							title="Edit"
+							className="text-blue-600 underline hover:text-blue-800"
+							aria-label="Edit"
+							onClick={handleSave}
+						>
+							Save
+						</button>
+					</div>
+				)}
+			</Fragment>
+		)
+	}
 	return (
 		<div className="flex flex-col">
-			<label htmlFor={id} className="font-bold">
-				{label}
-			</label>
-			{!!(edit && editableContent !== null) && (
-				<input
-					id={id}
-					type={type}
-					value={editableContent && type === 'number' ? 0 : undefined}
-					onChange={onChange}
-				/>
-			)}
+			<div className="flex gap-3">
+				<label htmlFor={id} className="font-bold">
+					{label}
+				</label>
+				{hasEditableContent && <EditActions />}
+			</div>
+			{!!edit && <Inputs />}
 			{!edit && children}
 		</div>
 	)

@@ -1,25 +1,28 @@
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { IParkingSpot, ParkingSpotTypeMapEnum } from '../../models/garage'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { addCurrentSelection, addNewSpot } from '../../store/slices/garageSlice'
 interface IProps {
 	spot: IParkingSpot
-	newSpot?: boolean
 }
-const ParkingSpot: React.FC<IProps> = ({ newSpot, spot }) => {
+const ParkingSpot: React.FC<IProps> = ({ spot }) => {
 	// Extract the name of the parking spot type
-	const title = ParkingSpotTypeMapEnum[spot.type]
+	const title = spot?.type && ParkingSpotTypeMapEnum[spot.type]
 	const dispatch = useAppDispatch()
 	const currentSelection = useAppSelector(
 		(state) => state.garageSlice.currentSelection
 	)
+
+	useEffect(() => {
+		console.log('update', spot.type)
+	}, [spot.type])
 
 	const isSelected = currentSelection?.id === spot.id
 
 	const currentlySelectedStyles = (): string => {
 		if (isSelected) {
 			return `outline outline-2 outline-offset-2 ${
-				spot.occupied ? 'outline-red-400' : ' outline-blue-400'
+				spot.occupied ? 'outline-red-500' : ' outline-blue-500'
 			}`
 		}
 		return ''
@@ -27,17 +30,17 @@ const ParkingSpot: React.FC<IProps> = ({ newSpot, spot }) => {
 
 	return (
 		<div className="my-1 mx-7">
-			{newSpot ? (
+			{!spot.type ? (
 				<button
 					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs text-white text-black outline-dotted outline-2 outline-gray-700 ${currentlySelectedStyles()} `}
-					onClick={() => dispatch(addNewSpot(spot))}
+					onClick={() => spot && dispatch(addNewSpot(spot))}
 				>
 					Add
 				</button>
 			) : (
 				<button
 					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs text-white ${currentlySelectedStyles()} ${
-						spot.occupied ? 'bg-red-400' : ' bg-blue-400'
+						spot.occupied ? 'bg-red-500' : ' bg-blue-500'
 					}`}
 					onClick={() => dispatch(addCurrentSelection(spot))}
 				>

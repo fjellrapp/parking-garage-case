@@ -108,7 +108,7 @@ export const initial: IGarageFloor[] = [
 		available: 5,
 		spots: [
 			{
-				id: 11,
+				id: 20,
 				type: ParkingSpotType.COMPACT,
 				occupied: true,
 				occupiedAtDateTime: new Date(2023, 0, 7, 3, 24, 0).getTime(),
@@ -117,7 +117,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 12,
+				id: 21,
 				type: ParkingSpotType.COMPACT,
 				occupied: true,
 				occupiedAtDateTime: new Date(2023, 0, 10, 2, 24, 0).getTime(),
@@ -126,7 +126,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 13,
+				id: 22,
 				type: ParkingSpotType.COMPACT,
 				occupied: false,
 				occupiedAtDateTime: null,
@@ -135,7 +135,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 14,
+				id: 23,
 				type: ParkingSpotType.LARGE,
 				occupied: true,
 				occupiedAtDateTime: new Date(2023, 0, 10, 6, 24, 0).getTime(),
@@ -144,7 +144,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 15,
+				id: 24,
 				type: ParkingSpotType.LARGE,
 				occupied: false,
 				occupiedAtDateTime: null,
@@ -153,7 +153,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 16,
+				id: 25,
 				type: ParkingSpotType.LARGE,
 				occupied: false,
 				occupiedAtDateTime: null,
@@ -162,7 +162,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 17,
+				id: 26,
 				type: ParkingSpotType.HANDICAP,
 				occupied: true,
 				occupiedAtDateTime: new Date(2023, 0, 5, 3, 24, 0).getTime(),
@@ -171,7 +171,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 18,
+				id: 27,
 				type: ParkingSpotType.HANDICAP,
 				occupied: false,
 				occupiedAtDateTime: null,
@@ -180,7 +180,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 19,
+				id: 28,
 				type: ParkingSpotType.MOTORCYCLE,
 				occupied: true,
 				occupiedAtDateTime: new Date(2023, 0, 5, 3, 24, 0).getTime(),
@@ -189,7 +189,7 @@ export const initial: IGarageFloor[] = [
 				floor: 2,
 			},
 			{
-				id: 20,
+				id: 29,
 				type: ParkingSpotType.MOTORCYCLE,
 				occupied: false,
 				occupiedAtDateTime: null,
@@ -207,12 +207,12 @@ export const initial: IGarageFloor[] = [
  */
 export const initEmptyParkingspot = (
 	floor: number,
-	currentSpotsLength: number,
+	startingIndex: number,
 	index: number
 ) => {
 	const emptySpot = {
-		id: floor * currentSpotsLength + index + 1,
-		type: ParkingSpotType.COMPACT,
+		id: startingIndex + index,
+		type: null,
 		occupied: false,
 		occupiedAtDateTime: null,
 		duration: 0,
