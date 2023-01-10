@@ -12,7 +12,7 @@ const DrawerContainers: React.FC<IProps> = ({ isOpen, children }) => {
 	return (
 		<div
 			aria-expanded={isOpen}
-			className={`fixed left-0 flex h-[40vh] w-screen justify-center rounded-t-2xl  bg-slate-200 shadow-2xl ${
+			className={`fixed left-0 flex h-[40vh] w-screen justify-center rounded-t-2xl bg-white shadow-2xl ${
 				isOpen ? ' bottom-[0]' : 'hidden'
 			}`}
 		>

@@ -69,7 +69,7 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 	}
 	return (
 		// The content is displayed in a flex column, with a gap of 5. The overflow is set to auto, so that the content is scrollable.
-		<div className="mx-5 flex flex-col gap-5 overflow-y-auto py-6 pr-0 scrollbar scrollbar-thin scrollbar-track-slate-200  scrollbar-thumb-slate-300">
+		<div className="mx-5 flex flex-col gap-5 overflow-y-auto py-6 pr-0 scrollbar scrollbar-thin scrollbar-track-white  scrollbar-thumb-slate-300">
 			{
 				// The ContentGroup component is used to display the content, and is also used to edit content.
 				// The label is the title of the content, and the id is used to identify the content.
