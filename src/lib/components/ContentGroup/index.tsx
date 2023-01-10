@@ -45,7 +45,7 @@ const ContentGroup: React.FC<IProps> = ({
 						id={id}
 						name={id}
 						className="w-[40%] rounded-md border border-gray-300 p-2"
-						onChange={(e) => onChange(e)}
+						onChange={(e) => onChange && onChange(e)}
 						value={
 							editableContent ? (editableContent as number) : ''
 						}
