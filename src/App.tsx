@@ -1,9 +1,9 @@
 import React from 'react'
 import Layout from './lib/components/Layout/LayoutMain'
 import { useAppDispatch, useAppSelector } from './lib/hooks'
-import GarageFloor from './lib/components/GarageFloor'
+import GarageFloor from './lib/modules/GarageFloor'
 import Heading from './lib/components/Heading'
-import Drawer from './lib/components/Drawer'
+import Drawer from './lib/modules/Drawer'
 import {
 	cancelNewSpot,
 	removeCurrentSelection,

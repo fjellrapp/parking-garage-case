@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
 	IParkingSpot,
 	ParkingSpotTypeEnum,
@@ -31,6 +31,16 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 	const isNewSpot = spot?.type === null
 
 	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		// This will sync the spot-data with the local state
+		if (spot.fee) {
+			editFee(spot.fee)
+		}
+		if (spot.type) {
+			editType(spot.type)
+		}
+	}, [spot.fee, spot.type])
 
 	// The handleEditFee function is used to update the fee in the state
 	// @param e The event object
@@ -94,7 +104,7 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 					handleEditFee(e as React.ChangeEvent<HTMLInputElement>)
 				}
 				onSave={() => fee && dispatch(updateFee(fee))}
-				onCancel={() => editFee(null)}
+				onCancel={() => (spot.fee ? editFee(spot.fee) : editFee(null))}
 			>
 				NOK {spot?.fee},-
 			</ContentGroup>
@@ -110,7 +120,7 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 				onSave={() =>
 					dispatch(updateSpotType(type as ParkingSpotTypeEnum))
 				}
-				onCancel={() => editType(null)}
+				onCancel={() => (spot.type ? editType(type) : editType(null))}
 			>
 				{spot?.type
 					? ParkingSpotTypeMapEnum[spot.type]

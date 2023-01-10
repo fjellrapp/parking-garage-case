@@ -3,8 +3,8 @@ import { IParkingSpot, ParkingSpotTypeMapEnum } from '../../models/garage'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { updateDuration, updateFee } from '../../store/slices/garageSlice'
 import { millisecondsToHours } from 'date-fns'
-import EditableContent from '../EditableContent'
-import DrawerContainers from '../DrawerContainers'
+import EditableContent from '../../components/EditableContent'
+import DrawerContainers from '../../components/DrawerContainers'
 
 interface IProps {
 	isOpen: boolean
@@ -22,7 +22,6 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 	const dispatch = useAppDispatch()
 
 	// The current selection in the store
-
 	const currentState = useAppSelector(
 		(state) => state.garageSlice.currentSelection
 	)

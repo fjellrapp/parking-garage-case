@@ -87,7 +87,9 @@ const ContentGroup: React.FC<IProps> = ({
 						type={type}
 						className="w-[40%] rounded-md border border-gray-300 p-2"
 						onChange={onChange}
-						value={editableContent as number}
+						value={
+							editableContent ? (editableContent as number) : ''
+						}
 					/>
 				)}
 			</Fragment>
