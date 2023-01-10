@@ -72,7 +72,7 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 				NOK {spot?.fee},-
 			</ContentGroup>
 			<ContentGroup
-				label="Parking spot type"
+				label={`Parking spot type ${isNewSpot ? '(required)' : ''}`}
 				id="type"
 				editableContent={type}
 				saveButton={isNewSpot ? false : true}
@@ -90,7 +90,7 @@ const EditableContent: React.FC<IProps> = ({ spot }) => {
 			{isNewSpot && (
 				<div className="m-5 flex justify-end">
 					<button
-						title="Submit"
+						title={type === null ? 'Select a type' : 'Submit'}
 						className="rounded-full bg-blue-700 px-4 py-2 text-white disabled:cursor-not-allowed disabled:bg-gray-500 hover:bg-blue-900 disabled:hover:bg-gray-500"
 						onClick={() => handleCreateNewSpot()}
 						disabled={type === null}

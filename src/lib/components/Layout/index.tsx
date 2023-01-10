@@ -4,9 +4,9 @@ interface IProps {
 }
 const Layout: React.FC<IProps> = ({ children }) => {
 	return (
-		<div className="mx-auto max-w-[90vw] flex-row md:max-w-[80vw]">
+		<main className="mx-auto max-w-[90vw] flex-row md:max-w-[80vw]">
 			{children}
-		</div>
+		</main>
 	)
 }
 

@@ -79,7 +79,7 @@ const ContentGroup: React.FC<IProps> = ({
 				{!edit && (
 					<button
 						title="Edit"
-						className="text-blue-600 underline hover:text-blue-800"
+						className="text-blue-700 underline hover:text-blue-800"
 						aria-label="Edit"
 						onClick={() => setEdit(true)}
 					>
@@ -90,7 +90,7 @@ const ContentGroup: React.FC<IProps> = ({
 					<div className="flex gap-3">
 						<button
 							title="Edit"
-							className="text-blue-600 underline hover:text-blue-800"
+							className="text-blue-700 underline hover:text-blue-900"
 							aria-label="Edit"
 							onClick={handleCancel}
 						>
@@ -99,7 +99,7 @@ const ContentGroup: React.FC<IProps> = ({
 						{saveButton && (
 							<button
 								title="Edit"
-								className="text-blue-600 underline hover:text-blue-800"
+								className="text-blue-700 underline hover:text-blue-900"
 								aria-label="Edit"
 								onClick={handleSave}
 							>

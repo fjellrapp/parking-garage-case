@@ -45,11 +45,11 @@ function App() {
 				</p>
 				<div className="flex gap-3">
 					<span
-						className={`h-fit w-fit rounded-md bg-red-500 p-2 text-white`}
+						className={`h-fit w-fit rounded-md bg-red-600 p-2 font-semibold text-white`}
 					>
 						Occupied
 					</span>
-					<span className="h-fit w-fit rounded-md bg-blue-500 p-2 text-white">
+					<span className="h-fit w-fit rounded-md bg-blue-600 p-2 font-semibold text-white">
 						Available
 					</span>
 				</div>

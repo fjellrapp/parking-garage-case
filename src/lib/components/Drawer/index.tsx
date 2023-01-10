@@ -89,8 +89,8 @@ const Drawer: React.FC<IProps> = ({ isOpen, spot, onCancel }) => {
 							spot in floor {spot?.floor}
 						</h3>
 						<span
-							className={` self-center rounded-lg p-2 text-white  ${
-								spot?.occupied ? 'bg-red-500' : 'bg-blue-500'
+							className={` self-center rounded-lg p-2 font-semibold text-white  ${
+								spot?.occupied ? 'bg-red-600' : 'bg-blue-600'
 							}`}
 						>
 							{spot?.occupied ? 'Occupied' : 'Available'}

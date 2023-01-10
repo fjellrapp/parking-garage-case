@@ -18,7 +18,7 @@ const ParkingSpot: React.FC<IProps> = ({ spot }) => {
 	const currentlySelectedStyles = (): string => {
 		if (isSelected) {
 			return `outline outline-2 outline-offset-2 ${
-				spot.occupied ? 'outline-red-500' : ' outline-blue-500'
+				spot.occupied ? 'outline-red-600' : ' outline-blue-600'
 			}`
 		}
 		return ''
@@ -35,8 +35,8 @@ const ParkingSpot: React.FC<IProps> = ({ spot }) => {
 				</button>
 			) : (
 				<button
-					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs text-white ${currentlySelectedStyles()} ${
-						spot.occupied ? 'bg-red-500' : ' bg-blue-500'
+					className={`w-15 h-8 min-w-full rounded-md border-none p-2 text-xs font-semibold text-white ${currentlySelectedStyles()} ${
+						spot.occupied ? 'bg-red-600' : ' bg-blue-600'
 					}`}
 					onClick={() => dispatch(addCurrentSelection(spot))}
 				>
