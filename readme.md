@@ -33,3 +33,7 @@ Deployed on Netlify at: https://monumental-haupia-f503af.netlify.app/
     -   index.css
     -   vite.env.d.ts
 -   ... configs
+
+### Class diagram
+
+![class diagram](<assets/ERD%20with%20colored%20entities%20(UML%20notation).png>)

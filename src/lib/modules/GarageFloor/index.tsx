@@ -2,6 +2,8 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { IGarageFloor, IParkingSpot } from '../../models/garage'
 import ParkingSpot from '../ParkingSpot'
 import { initEmptyParkingspot } from '../../store/init'
+import GarageFloorHeading from '../../components/GarageFloorHeading'
+import LayoutFlexCol from '../../components/Layout/LayoutFlexCol'
 /**
  * The GarageFloor component is used to display the floor in the garage.
  */
@@ -62,15 +64,12 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 	}, [canCreateNSpots])
 
 	return (
-		<div className="flex flex-col">
-			<div className="flex items-center justify-between">
-				<h2 className="mb-4 font-semibold">{floor.name}</h2>
-				<div className="mb-3 text-xs">
-					<p>
-						Available: {available}/{capacity}
-					</p>
-				</div>
-			</div>
+		<LayoutFlexCol>
+			<GarageFloorHeading
+				available={available}
+				capacity={capacity}
+				floorName={floor.name}
+			/>
 			<div className="grid grid-cols-2">
 				{
 					// The allSpots array is mapped to display the spots.
@@ -81,7 +80,7 @@ const GarageFloor: React.FC<IProps> = ({ floor }) => {
 					</Fragment>
 				))}
 			</div>
-		</div>
+		</LayoutFlexCol>
 	)
 }
 
