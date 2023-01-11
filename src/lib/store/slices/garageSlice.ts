@@ -108,6 +108,7 @@ const updateSpotTypeReducer = (
 ) => {
 	// Update the spot type of the current selection
 	if (state.currentSelection) {
+		state.currentSelection.type = action.payload
 		// Find the floor, and then the spot.
 		const floor = state.garage.find(
 			(f) => f.id === state.currentSelection?.floor
